@@ -19,6 +19,7 @@ app.use(function(req, res, next) {
 app.get('/', function(req, res) {
 
   var combineImages = function(gm) {
+    console.log(req.query.images);
     req.query.images.forEach(function(image) {
       gm.geometry(100, 100).append(image);
     }, this);
