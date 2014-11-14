@@ -48,6 +48,7 @@ app.get('/', function(req, res) {
           }
         });
       }
+      res.send('failed');
       console.log(err);
     });
 });
