@@ -21,7 +21,7 @@ app.get('/', function(req, res) {
 
   var combineImages = function(gm) {
     if (!req.query.images) { return gm; }
-    console.log('here:' + req.query);
+    console.log('here:' + req.query.images);
     req.query.images.forEach(function(image) {
       gm.geometry(100, 100).append(image);
     }, this);
@@ -46,6 +46,8 @@ app.get('/', function(req, res) {
         }, function(err) {
           if (!err) {
             res.send('https://s3.amazonaws.com/' + S3_BUCKET + '/' + imageName);
+          } else {
+            console.log(err);
           }
         });
       }
