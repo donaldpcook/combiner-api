@@ -1,0 +1,17 @@
+{
+  "name": "combiner-api",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.0.27",
+    "body-parser": "^1.9.2",
+    "express": "^4.10.2",
+    "gm": "git://github.com/donaldpcook/gm.git#montage"
+  }
+}
