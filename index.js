@@ -5,6 +5,10 @@ var express = require('express'),
 
 var app = express();
 
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
+
 //cors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -31,14 +35,14 @@ app.get('/', function(req, res) {
         var imageName = Math.floor(Math.random() * 999999) + '.jpg';
 
         s3.putObject({
-          Bucket: 'dc-magick',
+          Bucket: S3_BUCKET,
           Key: imageName,
           Body: buffer,
           ACL: 'public-read',
           ContentType: 'image/jpeg'
         }, function(err) {
           if (!err) {
-            res.send('https://s3.amazonaws.com/dc-magick/' + imageName);
+            res.send('https://s3.amazonaws.com/' + S3_BUCKET + '/' + imageName);
           }
         });
       }
@@ -46,4 +50,4 @@ app.get('/', function(req, res) {
     });
 });
 
-app.listen(3001);
+app.listen(process.env.PORT || 5000);
