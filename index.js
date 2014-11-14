@@ -34,7 +34,7 @@ app.get('/', function(req, res) {
   combineImages(image)
     .toBuffer('jpg', function(err, buffer) {
       if (!err) {
-        aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+        AWS.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
         var s3 = new AWS.S3();
         var imageName = Math.floor(Math.random() * 999999) + '.jpg';
 
