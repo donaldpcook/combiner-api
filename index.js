@@ -43,7 +43,8 @@ app.get('/', function(req, res) {
           ContentType: 'image/jpeg'
         }, function(err) {
           if (!err) {
-            res.send('https://s3.amazonaws.com/' + S3_BUCKET + '/' + imageName);
+            res.write('https://s3.amazonaws.com/' + S3_BUCKET + '/' + imageName);
+            res.end();
           }
         });
       }
