@@ -47,11 +47,8 @@ app.get('/', function(req, res) {
           if (!err) {
             res.send('https://s3.amazonaws.com/' + S3_BUCKET + '/' + imageName);
           }
-          res.send('failed');
         });
       }
-      res.send('failed');
-      console.log(err);
     });
 });
 
