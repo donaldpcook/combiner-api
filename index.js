@@ -1,5 +1,6 @@
 var express = require('express'),
     gm = require('gm'),
+    imageMagick = gm.subClass({ imageMagick: true }),
     bodyParser = require('body-parser'),
     AWS = require('aws-sdk');
 
@@ -28,7 +29,7 @@ app.get('/', function(req, res) {
     return gm;
   };
 
-  var image = gm();
+  var image = imageMagick();
 
   combineImages(image)
     .toBuffer('jpg', function(err, buffer) {
