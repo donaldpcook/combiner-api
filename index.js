@@ -119,7 +119,7 @@ app.post('/', function(req, res) {
         var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
         var file = fs.createWriteStream(fileName);
         file.end();
-        fs.writeFileSync(fileName);
+        fs.writeFileSync(fileName, image);
 
         imageNames.push(fileName);
         console.log(fileName);
