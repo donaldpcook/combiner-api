@@ -77,6 +77,7 @@ app.post('/', function(req, res) {
     combineImages(image)
       .toBuffer('jpg', function(err, buffer) {
         if (!err) {
+          console.log('got line 80');
           AWS.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
           var s3 = new AWS.S3();
           var imageName = Math.floor(Math.random() * 999999) + '.jpg';
@@ -110,6 +111,8 @@ app.post('/', function(req, res) {
 
   var combineImages = function(gm) {
     if (!files) { return gm; }
+
+    console.log('got line 115');
 
     files.forEach(function(image) {
       var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
