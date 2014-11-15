@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.0.27",
-    "body-parser": "^1.9.2",
+    "connect-busboy": "0.0.2",
     "express": "^4.10.2",
     "gm": "git://github.com/donaldpcook/gm.git#montage"
   }
