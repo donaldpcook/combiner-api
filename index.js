@@ -96,11 +96,11 @@ app.post('/', function(req, res) {
             }
           });
 
-          // cleanup tmp files
-          //imageNames.forEach(function(imageName) {
-            //fs.unlink(imageName, function() {
-            //});
-          //});
+           //cleanup tmp files
+          imageNames.forEach(function(imageName) {
+            fs.unlink(imageName, function() {
+            });
+          });
         } else {
           console.log(err);
         }
@@ -118,13 +118,13 @@ app.post('/', function(req, res) {
       if (idx > 0) {
         var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
         var file = fs.createWriteStream(fileName);
-        file.write(image);
         file.end();
+        fs.writeFileSync(fileName);
 
         imageNames.push(fileName);
         console.log(fileName);
 
-        gm.geometry(100, 100).append(fileName);
+        gm.geometry(100, 100).montage(fileName);
       }
     }, this);
 
