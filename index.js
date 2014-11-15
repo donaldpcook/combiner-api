@@ -34,7 +34,7 @@ app.get('/', function(req, res) {
     return gm;
   };
 
-  var image = gm();
+  var image = imageMagick();
 
   combineImages(image)
     .toBuffer('jpg', function(err, buffer) {
@@ -73,7 +73,7 @@ app.post('/', function(req, res) {
   });
 
   req.busboy.on('finish', function() {
-    var image = gm();
+    var image = imageMagick();
     combineImages(image)
       .toBuffer('jpg', function(err, buffer) {
         if (!err) {
