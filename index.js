@@ -121,6 +121,7 @@ app.post('/', function(req, res) {
       file.end();
 
       imageNames.push(fileName);
+      console.log(fileName);
 
       gm.geometry(100, 100).append(fileName);
     }, this);
