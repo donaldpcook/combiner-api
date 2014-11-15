@@ -97,10 +97,10 @@ app.post('/', function(req, res) {
           });
 
           // cleanup tmp files
-          imageNames.forEach(function(imageName) {
-            fs.unlink(imageName, function() {
-            });
-          });
+          //imageNames.forEach(function(imageName) {
+            //fs.unlink(imageName, function() {
+            //});
+          //});
         } else {
           console.log(err);
         }
