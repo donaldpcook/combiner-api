@@ -68,6 +68,7 @@ app.post('/', function(req, res) {
   var imageNames = [];
 
   req.busboy.on('file', function (fieldname, file, filename) {
+    console.log(fieldname, file, filename)
     var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
     imageNames.push(fileName);
 
