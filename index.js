@@ -18,6 +18,7 @@ app.use(busboy());
 //cors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
@@ -67,7 +68,6 @@ app.post('/', function(req, res) {
   var imageNames = [];
 
   req.busboy.on('file', function (fieldname, file, filename) {
-    console.log('got a file');
     var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
     imageNames.push(fileName);
 
