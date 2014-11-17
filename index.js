@@ -74,19 +74,21 @@ app.post('/', function(req, res) {
     file.on('end', function(image) {
       console.log('ended');
 
-      var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
-      var file = fs.createWriteStream(fileName);
-      file.write(image);
-      file.end();
+      //var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
+      //var file = fs.createWriteStream(fileName);
+      //file.write(image);
+      //file.end();
 
-      imageNames.push(fileName);
 
-      gm.geometry(100, 100).append(fileName);
     });
+
+    var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
+    imageNames.push(fileName);
+    file.pipe(fs.createWriteStream(fileName);
   });
 
   req.busboy.on('finish', function() {
-    //console.log('LENGTH', files.length);
+    console.log('LENGTH', files.length);
     var image = imageMagick();
     //combineImages(image);
 
@@ -130,15 +132,7 @@ app.post('/', function(req, res) {
     if (!files || files.length < 2) { return gm; }
 
 
-    files.forEach(function(image, idx) {
-      console.log(idx);
-        var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
-        var file = fs.createWriteStream(fileName);
-        file.write(image);
-        file.end();
-
-        imageNames.push(fileName);
-
+    imageNames.forEach(function(fileName, idx) {
         gm.geometry(100, 100).append(fileName);
     }, this);
 
