@@ -118,8 +118,8 @@ app.post('/', function(req, res) {
       if (idx > 0) {
         var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
         var file = fs.createWriteStream(fileName);
-        file.end();
         fs.writeFileSync(fileName, image);
+        file.end();
 
         imageNames.push(fileName);
         console.log(fileName);
