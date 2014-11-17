@@ -86,7 +86,7 @@ app.post('/', function(req, res) {
   });
 
   req.busboy.on('finish', function() {
-    console.log('LENGTH', files.length);
+    //console.log('LENGTH', files.length);
     var image = imageMagick();
     //combineImages(image);
 
