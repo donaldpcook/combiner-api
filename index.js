@@ -90,7 +90,7 @@ app.post('/', function(req, res) {
     var image = imageMagick();
     //combineImages(image);
 
-    setTimeout(function) {
+    setTimeout(function() {
     image.toBuffer('jpg', function(err, buffer) {
       if (!err) {
         console.log('got line 80');
