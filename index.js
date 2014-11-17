@@ -79,8 +79,10 @@ app.post('/', function(req, res) {
   req.busboy.on('finish', function() {
     console.log('LENGTH', files.length);
     var image = imageMagick(files[0]);
-    combineImages(image)
-      .toBuffer('jpg', function(err, buffer) {
+    combineImages(image);
+
+    setTimeout(function() {
+      gm.toBuffer('jpg', function(err, buffer) {
         if (!err) {
           console.log('got line 80');
           AWS.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
@@ -110,6 +112,7 @@ app.post('/', function(req, res) {
           console.log(err);
         }
       });
+    }, 3000);
   });
 
   req.pipe(req.busboy);
