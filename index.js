@@ -9,12 +9,6 @@ var express = require('express'),
 
 var app = express();
 
-var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-var S3_BUCKET = process.env.S3_BUCKET;
-
-app.use(busboy());
-
 //cors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -22,6 +16,12 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
+
+app.use(busboy());
 
 app.get('/', function(req, res) {
 
