@@ -67,35 +67,18 @@ app.post('/', function(req, res) {
   var imageNames = [];
 
   req.busboy.on('file', function (fieldname, file, filename) {
-    file.on('data', function(chunk) {
-      files.push(chunk);
-    });
-
-    file.on('end', function(image) {
-      console.log('ended');
-
-      //var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
-      //var file = fs.createWriteStream(fileName);
-      //file.write(image);
-      //file.end();
-
-
-    });
-
     var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
     imageNames.push(fileName);
+
     file.pipe(fs.createWriteStream(fileName));
   });
 
   req.busboy.on('finish', function() {
-    console.log('LENGTH', files.length);
     var image = imageMagick();
     combineImages(image);
 
-    setTimeout(function() {
     image.toBuffer('jpg', function(err, buffer) {
       if (!err) {
-        console.log('got line 80');
         AWS.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
         var s3 = new AWS.S3();
         var imageName = Math.floor(Math.random() * 999999) + '.jpg';
@@ -115,22 +98,20 @@ app.post('/', function(req, res) {
         });
 
          //cleanup tmp files
-        //imageNames.forEach(function(imageName) {
-          //fs.unlink(imageName, function() {
-          //});
-        //});
+        imageNames.forEach(function(imageName) {
+          fs.unlink(imageName, function() {
+          });
+        });
       } else {
         console.log(err);
       }
     });
-    }, 1000);
   });
 
   req.pipe(req.busboy);
 
   var combineImages = function(gm) {
-    if (!files || files.length < 2) { return gm; }
-
+    if (!imageNames || imageNames.length < 2) { return gm; }
 
     imageNames.forEach(function(fileName, idx) {
         gm.geometry(100, 100).append(fileName);
