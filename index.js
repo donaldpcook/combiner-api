@@ -4,7 +4,7 @@ var express = require('express'),
     busboy = require('connect-busboy'),
     path = require('path'),
     gm = require('gm'),
-    imageMagick = gm.subClass({ imageMagick: true }),
+    //imageMagick = gm.subClass({ imageMagick: true }),
     AWS = require('aws-sdk');
 
 var app = express();
@@ -34,7 +34,7 @@ app.get('/', function(req, res) {
     return gm;
   };
 
-  var image = imageMagick();
+  var image = gm();
 
   combineImages(image)
     .toBuffer('jpg', function(err, buffer) {
@@ -67,6 +67,7 @@ app.post('/', function(req, res) {
   var imageNames = [];
 
   req.busboy.on('file', function (fieldname, file, filename) {
+    console.log('got a file');
     var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
     imageNames.push(fileName);
 
@@ -74,7 +75,7 @@ app.post('/', function(req, res) {
   });
 
   req.busboy.on('finish', function() {
-    var image = imageMagick();
+    var image = gm();
     combineImages(image);
 
     image.toBuffer('jpg', function(err, buffer) {
