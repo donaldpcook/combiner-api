@@ -124,6 +124,13 @@ app.post('/', function(req, res) {
         imageNames.push(fileName);
         console.log(fileName);
 
+        fs.readFile(filename, 'utf8', function (err,data) {
+          if (err) {
+            return console.log('err', err);
+          }
+          console.log('there', data);
+        });
+
         gm.geometry(100, 100).montage(fileName);
       }
     }, this);
