@@ -124,7 +124,7 @@ app.post('/', function(req, res) {
         imageNames.push(fileName);
         console.log(fileName);
 
-        fs.readFile(filename, 'utf8', function (err,data) {
+        fs.readFile(fileName, 'utf8', function (err,data) {
           if (err) {
             return console.log('err', err);
           }
