@@ -4,7 +4,7 @@ var express = require('express'),
     busboy = require('connect-busboy'),
     path = require('path'),
     gm = require('gm'),
-    //imageMagick = gm.subClass({ imageMagick: true }),
+    imageMagick = gm.subClass({ imageMagick: true }),
     AWS = require('aws-sdk');
 
 var app = express();
@@ -35,7 +35,7 @@ app.get('/', function(req, res) {
     return gm;
   };
 
-  var image = gm();
+  var image = imageMagick();
 
   combineImages(image)
     .toBuffer('jpg', function(err, buffer) {
@@ -75,7 +75,7 @@ app.post('/', function(req, res) {
   });
 
   req.busboy.on('finish', function() {
-    var image = gm();
+    var image = imageMagick();
     combineImages(image);
 
     image.toBuffer('jpg', function(err, buffer) {
