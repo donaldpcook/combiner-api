@@ -118,9 +118,9 @@ app.post('/', function(req, res) {
   var combineImages = function(gm) {
     if (!files || files.length < 2) { return gm; }
 
-    console.log('got line 115');
 
     files.forEach(function(image, idx) {
+      console.log(idx);
         var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
         var file = fs.createWriteStream(fileName);
         file.write(image);
