@@ -90,7 +90,7 @@ app.post('/', function(req, res) {
   req.busboy.on('finish', function() {
     console.log('LENGTH', files.length);
     var image = imageMagick();
-    //combineImages(image);
+    combineImages(image);
 
     setTimeout(function() {
     image.toBuffer('jpg', function(err, buffer) {
