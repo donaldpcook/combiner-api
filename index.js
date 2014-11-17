@@ -73,38 +73,40 @@ app.post('/', function(req, res) {
   });
 
   req.busboy.on('finish', function() {
-    var image = imageMagick(files[0]);
-    combineImages(image)
-      .toBuffer('jpg', function(err, buffer) {
-        if (!err) {
-          console.log('got line 80');
-          AWS.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
-          var s3 = new AWS.S3();
-          var imageName = Math.floor(Math.random() * 999999) + '.jpg';
+    setTimeout(function() {
+      var image = imageMagick(files[0]);
+      combineImages(image)
+        .toBuffer('jpg', function(err, buffer) {
+          if (!err) {
+            console.log('got line 80');
+            AWS.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+            var s3 = new AWS.S3();
+            var imageName = Math.floor(Math.random() * 999999) + '.jpg';
 
-          s3.putObject({
-            Bucket: S3_BUCKET,
-            Key: imageName,
-            Body: buffer,
-            ACL: 'public-read',
-            ContentType: 'image/jpeg'
-          }, function(err) {
-            if (!err) {
-              res.send('https://s3.amazonaws.com/' + S3_BUCKET + '/' + imageName);
-            } else {
-              console.log(err);
-            }
-          });
+            s3.putObject({
+              Bucket: S3_BUCKET,
+              Key: imageName,
+              Body: buffer,
+              ACL: 'public-read',
+              ContentType: 'image/jpeg'
+            }, function(err) {
+              if (!err) {
+                res.send('https://s3.amazonaws.com/' + S3_BUCKET + '/' + imageName);
+              } else {
+                console.log(err);
+              }
+            });
 
-           //cleanup tmp files
-          //imageNames.forEach(function(imageName) {
-            //fs.unlink(imageName, function() {
+             //cleanup tmp files
+            //imageNames.forEach(function(imageName) {
+              //fs.unlink(imageName, function() {
+              //});
             //});
-          //});
-        } else {
-          console.log(err);
-        }
-      });
+          } else {
+            console.log(err);
+          }
+        });
+    }, 1000);
   });
 
   req.pipe(req.busboy);
