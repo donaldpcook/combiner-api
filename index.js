@@ -84,7 +84,7 @@ app.post('/', function(req, res) {
 
     var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
     imageNames.push(fileName);
-    file.pipe(fs.createWriteStream(fileName);
+    file.pipe(fs.createWriteStream(fileName));
   });
 
   req.busboy.on('finish', function() {
