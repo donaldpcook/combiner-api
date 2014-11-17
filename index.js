@@ -71,16 +71,26 @@ app.post('/', function(req, res) {
       files.push(chunk);
     });
 
-    file.on('end', function() {
+    file.on('end', function(image) {
       console.log('ended');
+
+      var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
+      var file = fs.createWriteStream(fileName);
+      file.write(image);
+      file.end();
+
+      imageNames.push(fileName);
+
+      gm.geometry(100, 100).append(fileName);
     });
   });
 
   req.busboy.on('finish', function() {
     console.log('LENGTH', files.length);
     var image = imageMagick();
-    combineImages(image);
+    //combineImages(image);
 
+    setTimeout(function) {
     image.toBuffer('jpg', function(err, buffer) {
       if (!err) {
         console.log('got line 80');
@@ -111,6 +121,7 @@ app.post('/', function(req, res) {
         console.log(err);
       }
     });
+    }, 1000);
   });
 
   req.pipe(req.busboy);
