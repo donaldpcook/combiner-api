@@ -81,38 +81,36 @@ app.post('/', function(req, res) {
     var image = imageMagick(files[0]);
     combineImages(image);
 
-    setTimeout(function() {
-      image.toBuffer('jpg', function(err, buffer) {
-        if (!err) {
-          console.log('got line 80');
-          AWS.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
-          var s3 = new AWS.S3();
-          var imageName = Math.floor(Math.random() * 999999) + '.jpg';
+    image.toBuffer('jpg', function(err, buffer) {
+      if (!err) {
+        console.log('got line 80');
+        AWS.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+        var s3 = new AWS.S3();
+        var imageName = Math.floor(Math.random() * 999999) + '.jpg';
 
-          s3.putObject({
-            Bucket: S3_BUCKET,
-            Key: imageName,
-            Body: buffer,
-            ACL: 'public-read',
-            ContentType: 'image/jpeg'
-          }, function(err) {
-            if (!err) {
-              res.send('https://s3.amazonaws.com/' + S3_BUCKET + '/' + imageName);
-            } else {
-              console.log(err);
-            }
-          });
+        s3.putObject({
+          Bucket: S3_BUCKET,
+          Key: imageName,
+          Body: buffer,
+          ACL: 'public-read',
+          ContentType: 'image/jpeg'
+        }, function(err) {
+          if (!err) {
+            res.send('https://s3.amazonaws.com/' + S3_BUCKET + '/' + imageName);
+          } else {
+            console.log(err);
+          }
+        });
 
-           //cleanup tmp files
-          //imageNames.forEach(function(imageName) {
-            //fs.unlink(imageName, function() {
-            //});
+         //cleanup tmp files
+        //imageNames.forEach(function(imageName) {
+          //fs.unlink(imageName, function() {
           //});
-        } else {
-          console.log(err);
-        }
-      });
-    }, 3000);
+        //});
+      } else {
+        console.log(err);
+      }
+    });
   });
 
   req.pipe(req.busboy);
@@ -126,13 +124,12 @@ app.post('/', function(req, res) {
       if (idx > 0) {
         var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
         var file = fs.createWriteStream(fileName);
-        fs.writeFileSync(fileName, image);
+        file.write(image);
         file.end();
 
         imageNames.push(fileName);
-        console.log(fileName);
 
-        gm.geometry(100, 100).montage(fileName);
+        gm.geometry(100, 100).append(fileName);
       }
     }, this);
 
