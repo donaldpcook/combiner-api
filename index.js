@@ -78,7 +78,7 @@ app.post('/', function(req, res) {
 
   req.busboy.on('finish', function() {
     console.log('LENGTH', files.length);
-    var image = imageMagick(files[0]);
+    var image = imageMagick();
     combineImages(image);
 
     image.toBuffer('jpg', function(err, buffer) {
@@ -121,7 +121,6 @@ app.post('/', function(req, res) {
     console.log('got line 115');
 
     files.forEach(function(image, idx) {
-      if (idx > 0) {
         var fileName = './tmp/' + Math.floor(Math.random() * 999999) + '.jpg';
         var file = fs.createWriteStream(fileName);
         file.write(image);
@@ -130,7 +129,6 @@ app.post('/', function(req, res) {
         imageNames.push(fileName);
 
         gm.geometry(100, 100).append(fileName);
-      }
     }, this);
 
     return gm;
